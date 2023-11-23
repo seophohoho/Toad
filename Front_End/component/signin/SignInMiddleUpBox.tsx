@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios"; // Axios 가져오기
 import { SignInContainer } from "@/styles/SignInStyle";
 
 const MiddleUpBox = styled.div`
@@ -7,7 +8,7 @@ const MiddleUpBox = styled.div`
   height: 400px;
   background-color: #efefef;
   display: flex;
-  flex-direction: column; /* 주축을 세로로 설정 */
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 `;
@@ -17,7 +18,7 @@ const MiddleUpFrameBox = styled.div`
   height: 400px;
   background-color: transparent;
   display: flex;
-  flex-direction: column; /* 주축을 세로로 설정 */
+  flex-direction: column;
   justify-content: space-between;
 `;
 
@@ -91,16 +92,38 @@ const SignInMiddleUpBox: React.FC = () => {
     window.location.href = "/signup";
   };
 
+  const handleLogin = () => {
+    const loginId = document.getElementById("idInput")?.value;
+    const loginPw = document.getElementById("passwordInput")?.value;
+
+    if (!loginId || !loginPw) {
+      // ID 또는 비밀번호가 비어있는 경우 처리
+      alert("ID와 비밀번호를 모두 입력하세요");
+      return;
+    }
+
+    // 인증 엔드포인트로 POST 요청 보내기
+    axios.post("localhost:4000/signin", { loginId, loginPw })
+      .then(response => {
+        // 로그인 성공 처리
+        console.log("로그인 성공", response.data);
+      })
+      .catch(error => {
+        // 로그인 실패 처리
+        console.error("로그인 실패", error.response.data);
+      });
+  };
+
   return (
     <MiddleUpBox>
       <MiddleUpFrameBox>
         <LoginBox>
           {/* ID와 비밀번호 입력 필드 */}
           <div style={{ display: "flex", alignItems: "center" }}>
-            <InputField type="text" placeholder="ID" />
-            <InputField type="password" placeholder="Password" />
+            <InputField type="text" id="idInput" placeholder="ID" />
+            <InputField type="password" id="passwordInput" placeholder="비밀번호" />
             {/* 로그인 버튼 */}
-            <Button>로그인</Button>
+            <Button onClick={handleLogin}>로그인</Button>
             {/* 간격 추가 */}
             <div style={{ marginRight: "10px" }} />
             {/* 회원가입 버튼 */}
