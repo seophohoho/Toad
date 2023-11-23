@@ -92,9 +92,12 @@ const SignInMiddleUpBox: React.FC = () => {
     window.location.href = "/signup";
   };
 
-  const handleLogin = () => {
-    const loginId = document.getElementById("idInput")?.value;
-    const loginPw = document.getElementById("passwordInput")?.value;
+  const handleLogin = (userId:any,pw:any) => {
+    const loginId = userId;
+    const loginPw = pw;
+console.log({ "loginId":loginId, 
+"loginPw":loginPw 
+});
 
     if (!loginId || !loginPw) {
       // ID 또는 비밀번호가 비어있는 경우 처리
@@ -103,27 +106,34 @@ const SignInMiddleUpBox: React.FC = () => {
     }
 
     // 인증 엔드포인트로 POST 요청 보내기
-    axios.post("localhost:4000/signin", { loginId, loginPw })
+    axios.post("http://localhost:4000/sign/signin", 
+    { 
+      loginId:loginId, 
+      loginPw:loginPw 
+    }
+    )
       .then(response => {
         // 로그인 성공 처리
         console.log("로그인 성공", response.data);
+        alert("로그인에 성공했습니다^^");
       })
       .catch(error => {
         // 로그인 실패 처리
-        console.error("로그인 실패", error.response.data);
+        console.error("로그인 실패", error);
       });
   };
-
+  const [userId,setId] = useState("");
+  const [pw,setPw] = useState("");
   return (
     <MiddleUpBox>
       <MiddleUpFrameBox>
         <LoginBox>
           {/* ID와 비밀번호 입력 필드 */}
           <div style={{ display: "flex", alignItems: "center" }}>
-            <InputField type="text" id="idInput" placeholder="ID" />
-            <InputField type="password" id="passwordInput" placeholder="비밀번호" />
+            <InputField type="text" value={userId} onChange={(e)=>{setId(e.target.value)}} id="idInput" placeholder="ID" />
+            <InputField type="password" value={pw} onChange={(e)=>{setPw(e.target.value)}} id="passwordInput" placeholder="비밀번호" />
             {/* 로그인 버튼 */}
-            <Button onClick={handleLogin}>로그인</Button>
+            <Button onClick={()=>handleLogin(userId,pw)}>로그인</Button>
             {/* 간격 추가 */}
             <div style={{ marginRight: "10px" }} />
             {/* 회원가입 버튼 */}
