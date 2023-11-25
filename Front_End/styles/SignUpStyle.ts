@@ -530,6 +530,23 @@ const BottomButton = styled.button`
   border: none;
 `;
 
+//상단 회원가입, 상세페이지 감싸는것
+const SignUpTop = styled.div`
+  .header{
+    background-color: #f8f8f8;
+    padding: 10px;
+    text-align: center;
+  }
+  .header h1 {
+  margin: 0; 
+  font-size: 40px; 
+  color: #333; 
+  font-weight: bold; 
+
+
+}
+`;
+
 
 
 
@@ -572,6 +589,6 @@ export {
   Regi,
   RegiLabel,
   BottomButton,
-
+  SignUpTop
 
 };

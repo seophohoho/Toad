@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import React, { useRef } from 'react';
 import { useRouter } from 'next/router';
+import { SignUpTop } from "@/styles/SignUpStyle";
 import { TodAll, TodImage, TodLabel, TodSignUp, TodInfo, SignUpLabel, InfoLabel, BottomButton } from "@/styles/SignUpStyle";
 import {InfoMain,
     InfoSignUpBox,
@@ -162,12 +163,14 @@ const InfoPage: NextPage = () => {
      <TodAll>
         <TodImage/>
         <TodLabel>Tod</TodLabel>
+        <SignUpTop>
         <InfoSignUpBox>
             <SignUpLabel>회원가입</SignUpLabel>
         </InfoSignUpBox>
         <InfoInfoBox>
             <InfoLabel>상세정보 입력</InfoLabel>
         </InfoInfoBox>
+        </SignUpTop>
         <InfoMain>
             <OneExceptContainer>
                 <ProfileBox>

@@ -48,6 +48,7 @@ import {   TodAll,
   Regi,
   RegiLabel,
   BottomButton,
+  SignUpTop
 
  } from "@/styles/SignUpStyle";
 
@@ -197,14 +198,14 @@ const SignUp: NextPage = () => {
     <TodAll>
       <TodImage/>
         <TodLabel>TOD</TodLabel>
-        
+        <SignUpTop>
         <TodSignUp>
           <SignUpLabel>회원가입</SignUpLabel>
         </TodSignUp>
         <TodInfo >
           <InfoLabel>상세정보기입</InfoLabel>
         </TodInfo>
-  
+        </SignUpTop>
 
       <TodMain>
         <SignupInfo>
