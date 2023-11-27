@@ -53,8 +53,6 @@ import {   TodAll,
  } from "@/styles/SignUpStyle";
 
 
-
-
 // 회원가입 페이지
 const SignUp: NextPage = () => {
   // 초기값 세팅 - 아이디, 이름, 휴대폰번호, 이메일, 비밀번호, 비밀번호확인
@@ -186,12 +184,6 @@ const SignUp: NextPage = () => {
     setAgree1(e.target.checked);
     setAgree2(e.target.checked);
   };
-
-  
-
-
-  
-
 
   return (
     <>

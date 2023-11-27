@@ -135,7 +135,7 @@ const InfoPage: NextPage = () => {
   const handleRegistration = async () => {
     window.location.href = '/';
     try {
-      const response = await axios.post('/api/register',{
+      const response = await axios.post('http://localhost:4000/sign/signup',{
         id,
         name,
         phone,
