@@ -135,29 +135,27 @@ const InfoPage: NextPage = () => {
   const handleRegistration = async () => {
     window.location.href = '/';
     try {
-      const response = await axios.post('http://localhost:4000/sign/signup',{
-        id,
-        name,
-        phone,
-        email,
-        password,
-        preview,
-        job,
-        majorField,
-        minorField,
-        inputFile
+      axios.post('http://localhost:4000/sign/signup',{
+        userId:id,
+        userPw:password,
+        userName:name,
+        userPhone:phone,
+        userEmail:email,
+        userMajor:selectedJob,
+        userFieldOfStudy:selectedMajorField,
+        userTechStack:selectedMinorField,
+        userLicense:0
+      }).then(response => {
+        // 로그인 성공 처리
+        alert("회원가입에 성공했습니다.");
+      })
+      .catch(error => {
+        alert("회원가입 실패");
       });
-      console.log('Registration successful:', response.data);
-      
     } catch (error) {
       console.error('Registration failed:', error);
     } 
   };
-
-  
-
-      
-
 
     return(
      <TodAll>
@@ -208,10 +206,6 @@ const InfoPage: NextPage = () => {
                             ))}
                           </SmallSelect>
                     </BigSmallBox>
-                    <InfoPhoneBox>
-                        <InfoPhoneLabel>휴대폰*</InfoPhoneLabel>
-                        <InfoPhoneInput></InfoPhoneInput>
-                    </InfoPhoneBox>
             </OneExceptContainer>
             <OneBox>
                 <OneLabel>One이력서</OneLabel>

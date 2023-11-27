@@ -8,10 +8,6 @@ import { useDropzone } from "react-dropzone";
 import { useNavigate } from 'react-router-dom';
 import Link from 'next/link';
 
-
-
-
-
 import {   TodAll,
   TodImage,
   TodLabel,
@@ -72,7 +68,7 @@ const SignUp: NextPage = () => {
     }
 
     if (isId && isname && isPhone && isEmail && isPassword && isPasswordConfirm && isAgreedAll){
-      window.location.href = '/Info?id=${id}&name=${name}&phone=${phone}&email=${email}&password=${password}';
+      window.location.href = `/Info?id=${id}&name=${name}&phone=${phone}&email=${email}&password=${password}`;
     } else {
       alert("유효성 검사 또는 동의 여부가 충족되지 않습니다.");
     }
@@ -108,6 +104,7 @@ const SignUp: NextPage = () => {
       setIdMessage("사용가능한 아이디 입니다.");
       setIsId(true);
     }
+    console.log(id);
   };
 
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
