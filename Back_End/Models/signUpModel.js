@@ -9,7 +9,7 @@ async function signUp(formData, res) {
   try {
     const connection = await pool.getConnection();
     const query =
-      "INSERT INTO user_info (user_id, user_pw, user_name, user_phone, user_email, user_major, user_field_of_study,user_tech_stack) VALUES ?,?,?,?,?,?,?,?)";
+      "INSERT INTO toad_user_info (user_id, user_pw, user_name, user_phone, user_email, user_major, user_field_of_study,user_tech_stack,user_license) VALUES (?,?,?,?,?,?,?,?,?)";
     const values = [
       formData.userId,
       formData.userPw,
@@ -19,6 +19,7 @@ async function signUp(formData, res) {
       formData.userMajor,
       formData.userFieldOfStudy,
       formData.userTechStack,
+      formData.userLicense
     ];
     await connection.execute(query, values);
     connection.release();
