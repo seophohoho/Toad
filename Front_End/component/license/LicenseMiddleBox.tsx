@@ -181,6 +181,7 @@ const LicenseMiddleBoxComponent: React.FC = () => {
     }
     fetchData();
   }, []);
+
   if(loading) {
     return <ListBoxBottomSection>대기 중...</ListBoxBottomSection>;
   }
@@ -245,8 +246,8 @@ const LicenseMiddleBoxComponent: React.FC = () => {
             <DateCell>등록일</DateCell>
           </ListBoxTopSection>
           <ListBoxBottomSection>
-            {problems.map((problem, index) => (
-              <ProblemItem key={index} problem={problem} />
+            {problems.map((problem) => (
+              <ProblemItem key={problem.title} problem={problem} />
             ))}
           </ListBoxBottomSection>
         </ListBox>
