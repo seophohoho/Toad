@@ -49,30 +49,6 @@ const SearchDropdown = styled.select`
   border-radius: 5px;
 `;
 
-const KindText = styled.div`
-  margin-left: 50px;
-  font-size: 15px;
-  font-weight: bold;
-  color: #000;
-`;
-
-const KindDropdown = styled.select`
-  width: 250px;
-  margin-left: 20px;
-  padding: 8px;
-  border-radius: 5px;
-`;
-
-const ListItem = styled.div`
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  text-align: center;
-  border-bottom: 1px solid #8f8f8f;
-`;
-
 const ListBox = styled.div`
   width: 1200px;
   flex-direction: column;
@@ -109,26 +85,15 @@ const ListBoxBottomSection = styled.div`
   overflow-y: auto;
 `;
 
-const ProblemItem = ({ data }) => {
-  const {problem} = data;
-
-  return (
-    <ListItem>
-      <FieldCell>{category}</FieldCell>
-      <TitleCell>{title}</TitleCell>
-      <CountCell>{solvecount}</CountCell>
-      <DateCell>{date}</DateCell>
-    </ListItem>
-  );
-  
-}
-
-const sampleProblem = {
-  category: '분야',
-  title: '제목',
-  solvecount: 'n',
-  date: 'xxxx.xx.xx'
-}
+const ListItem = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  text-align: center;
+  border-bottom: 1px solid #8f8f8f;
+`;
 
 const FieldCell = styled.div`
   width: 150px;
@@ -163,28 +128,26 @@ const DateCell = styled.div`
   margin-right: 5px;
 `;
 
+const ProblemItem = ({ majorField, title, submitCount, createdAt }) => (
+  <ListItem>
+    <FieldCell>{majorField}</FieldCell>
+    <TitleCell>{title}</TitleCell>
+    <CountCell>{submitCount}</CountCell>
+    <DateCell>{createdAt}</DateCell>
+  </ListItem>
+);
 
 const LicenseMiddleBoxComponent: React.FC = () => {
-  const [problems, setProblems] = useState(null);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("http://localhost:4000/license/licenselist");
-        setProblems(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    }
-    fetchData();
-  }, []);
+  const [problems, setProblems] = useState([]);
 
-  if(loading) {
-    return <ListBoxBottomSection>대기 중...</ListBoxBottomSection>;
-  }
-  if(!problems) {
+  useEffect(() => {
+    axios.get('http://localhost:4000/license/licenselist')
+      .then(response => {
+        setProblems(response.data);
+      });
+    }, []);
+
+  if (!problems) {
     return (
       <License_MiddleBox>
         <MiddleFrameBox>
@@ -205,19 +168,7 @@ const LicenseMiddleBoxComponent: React.FC = () => {
               <DateCell>등록일</DateCell>
             </ListBoxTopSection>
             <ListBoxBottomSection>
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
-              <ProblemItem problem={sampleProblem} />
+              <ProblemItem majorField="예시" title="예시 제목" submitCount={10} createdAt="2022.12.01" />
             </ListBoxBottomSection>
           </ListBox>
         </MiddleFrameBox>
@@ -245,8 +196,14 @@ const LicenseMiddleBoxComponent: React.FC = () => {
             <DateCell>등록일</DateCell>
           </ListBoxTopSection>
           <ListBoxBottomSection>
-            {problems.map((problem) => (
-              <ProblemItem key={problem.title} problem={problem} />
+            {problems.map(problem => (
+              <ProblemItem
+                key={problem.problem_number}
+                majorField={problem.major_field_of}
+                title={problem.problem_title}
+                submitCount={problem.submit_cnt}
+                createdAt={problem.created_at}
+              />
             ))}
           </ListBoxBottomSection>
         </ListBox>
