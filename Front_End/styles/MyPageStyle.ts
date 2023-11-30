@@ -207,7 +207,7 @@ const MPProfileBox = styled.div`
     top: 205px;
     left: 300px;
     width: 1320px;
-    height: 989px;
+    height: 1639px;
     /* UI Properties */
     background: #FFFFFF 0% 0% no-repeat padding-box;
     opacity: 1;
@@ -225,7 +225,7 @@ const MPInfoBox = styled.div`
     height: 362px;
     /* UI Properties */
     opacity: 1;
-    margin-top: 85px;
+    margin-top: 50px;
     margin-left: 220px;
     margin-bottom: 20px;
 `;
@@ -571,6 +571,68 @@ const ChangeButton = styled.button`
     margin-left: 770px;
 `;
 
+//평가항목표를 위한 스타일
+const MPTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #CCE3A2 0% 0% no-repeat padding-box;
+`;
+
+const MPTableHeader = styled.th`
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  background: #A2CF68 0% 0% no-repeat padding-box;
+  color: #FFFFFF;
+`;
+
+const MPTableRow = styled.tr`
+  &:nth-child(even) {
+    background: #CCE3A2 0% 0% no-repeat padding-box;
+  }
+`;
+
+const MPTableData = styled.td`
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: #FFFFFF;
+`;
+
+//평가해야 하는 목록 박스
+const MPEvaluateBox = styled.div`
+    /* Layout Properties */
+    top: 770px;
+    left: 520px;
+    width: 880px;
+    height: 352px;
+    /* UI Properties */
+    opacity: 1;
+    margin-left: 220px;
+    margin-bottom: 26px;
+`;
+
+//성공버튼
+const SuccessButton = styled.button`
+  padding: 5px 10px;
+  background-color: red;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+`;
+//실패버튼
+const FailureButton = styled.button`
+  padding: 5px 10px;
+  background-color: blue;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+`;
+
+
+
 
 
 export {
@@ -611,5 +673,12 @@ export {
     MPPasswordEditLabel,
     MPPasswordNowBox,
     MPPasswordNowLabel,
-    ChangeButton
+    ChangeButton,
+    MPTable,
+    MPTableHeader,
+    MPTableRow,
+    MPTableData,
+    MPEvaluateBox,
+    SuccessButton,
+    FailureButton
 };
