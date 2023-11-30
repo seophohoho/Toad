@@ -116,6 +116,7 @@ console.log({ "loginId":loginId,
         // 로그인 성공 처리
         console.log("로그인 성공", response.data);
         alert("로그인에 성공했습니다^^");
+        setIsLoggedIn(true);
       })
       .catch(error => {
         alert("로그인 실패");

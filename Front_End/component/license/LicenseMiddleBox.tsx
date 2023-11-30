@@ -109,8 +109,8 @@ const ListBoxBottomSection = styled.div`
   overflow-y: auto;
 `;
 
-const ProblemItem = ({ problem }) => {
-  const { category, title, solvecount, date} = problem;
+const ProblemItem = ({ data }) => {
+  const {problem} = data;
 
   return (
     <ListItem>
@@ -167,13 +167,12 @@ const DateCell = styled.div`
 const LicenseMiddleBoxComponent: React.FC = () => {
   const [problems, setProblems] = useState(null);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("");
-        setProblems(response.data.problems);
+        const response = await axios.get("http://localhost:4000/license/licenselist");
+        setProblems(response.data);
       } catch (e) {
         console.log(e);
       }
