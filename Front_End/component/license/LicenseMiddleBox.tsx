@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { LicenseContainer } from "@/styles/LicenseStyle";
 
@@ -44,7 +45,7 @@ const SearchField = styled.div`
 const SearchDropdown = styled.select`
   width: 250px;
   margin-left: 20px;
-  padding: 8px; /* 수정: 크기 조절 */
+  padding: 8px;
   border-radius: 5px;
 `;
 
@@ -58,11 +59,9 @@ const KindText = styled.div`
 const KindDropdown = styled.select`
   width: 250px;
   margin-left: 20px;
-  padding: 8px; /* 수정: 크기 조절 */
+  padding: 8px;
   border-radius: 5px;
 `;
-
-
 
 const ListItem = styled.div`
   width: 100%;
@@ -71,7 +70,7 @@ const ListItem = styled.div`
   align-items: center;
   padding: 0 10px;
   text-align: center;
-  border-bottom: 1px solid #8f8f8f; /* 추가: 각 항목에 세로 테두리 스타일 */
+  border-bottom: 1px solid #8f8f8f;
 `;
 
 const ListBox = styled.div`
@@ -79,9 +78,8 @@ const ListBox = styled.div`
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid #8f8f8f; /* 추가: 테두리 스타일 */
+  border: 1px solid #8f8f8f;
 `;
-
 
 const ListBoxTopSection = styled.div`
   width: calc(100% - 20px);
@@ -95,12 +93,12 @@ const ListBoxTopSection = styled.div`
   color: #000;
   font-weight: bold;
   font-size: 15px;
-  text-align: center; /* 수정: 중앙 정렬 */
+  text-align: center;
 `;
 
 const ListBoxBottomSection = styled.div`
-  width: calc(100% - 2px); /* 수정: 테두리 고려하여 너비 조절 */
-  height: calc(100% - 52px); /* 수정: 테두리 고려하여 높이 조절 */
+  width: calc(100% - 2px);
+  height: calc(100% - 52px);
   background-color: #efefef;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -109,12 +107,28 @@ const ListBoxBottomSection = styled.div`
   justify-content: space-evenly;
   align-items: center;
   overflow-y: auto;
-
-  /* 추가: 마지막 항목의 테두리 제거 */
-  ${ListItem}:last-child {
-    border-bottom: none;
-  }
 `;
+
+const ProblemItem = ({ problem }) => {
+  const { category, title, solvecount, date} = problem;
+
+  return (
+    <ListItem>
+      <FieldCell>{category}</FieldCell>
+      <TitleCell>{title}</TitleCell>
+      <CountCell>{solvecount}</CountCell>
+      <DateCell>{date}</DateCell>
+    </ListItem>
+  );
+  
+}
+
+const sampleProblem = {
+  category: '분야',
+  title: '제목',
+  solvecount: 'n',
+  date: 'xxxx.xx.xx'
+}
 
 const FieldCell = styled.div`
   width: 150px;
@@ -149,66 +163,78 @@ const DateCell = styled.div`
   margin-right: 5px;
 `;
 
-const PageButtonsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-`;
-
-const PageButtons = styled.div`
-  display: flex;
-  align-items: center;
-
-  button {
-    margin: 0 5px;
-    padding: 5px 10px;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
-  }
-`;
 
 const LicenseMiddleBoxComponent: React.FC = () => {
-    const [page, setPage] = useState(1);
-    const [selectedField, setSelectedField] = useState("웹/프론트"); // 초기값 설정
-    const itemsPerPage = 15;
-    const totalItems = 30;
-  
-    const items = Array.from({ length: totalItems }, (_, index) => ({
-      id: index,
-      field: `웹/프론트`,
-      title: `오늘부터는 나도 웹 개발자!`,
-      count: Math.floor(Math.random() * 100),
-      date: new Date().toLocaleDateString(),
-    }));
-  
-    const filteredItems = items.filter(
-      (item) => item.field === selectedField
-    );
-  
-    const currentItems = filteredItems.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const [problems, setProblems] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-    const renderPageButtons = () => {
-      // ... (이전 코드와 동일)
-    };
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get("");
+        setProblems(response.data.problems);
+      } catch (e) {
+        console.log(e);
+      }
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+  if(loading) {
+    return <ListBoxBottomSection>대기 중...</ListBoxBottomSection>;
+  }
+  if(!problems) {
     return (
+      <License_MiddleBox>
+        <MiddleFrameBox>
+          <SearchBox>
+            <SearchField>분야</SearchField>
+            <SearchDropdown>
+              <option value="웹/프론트">웹/프론트</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </SearchDropdown>
+          </SearchBox>
+          <ListBox>
+            <ListBoxTopSection>
+              <FieldCell>분야</FieldCell>
+              <TitleCell>제목</TitleCell>
+              <CountCell>취득한 사람 수</CountCell>
+              <DateCell>등록일</DateCell>
+            </ListBoxTopSection>
+            <ListBoxBottomSection>
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+              <ProblemItem problem={sampleProblem} />
+            </ListBoxBottomSection>
+          </ListBox>
+        </MiddleFrameBox>
+      </License_MiddleBox>
+    );
+  }
+
+  return (
     <License_MiddleBox>
       <MiddleFrameBox>
         <SearchBox>
           <SearchField>분야</SearchField>
-          <SearchDropdown
-            value={selectedField}
-            onChange={(e) => setSelectedField(e.target.value)}
-          >
+          <SearchDropdown>
             <option value="웹/프론트">웹/프론트</option>
-            <option value="웹/백엔드">웹/백엔드</option>
-            <option value="웹/디자인">웹/디자인</option>
-            <option value="웹/기획자">웹/기획자</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
           </SearchDropdown>
         </SearchBox>
         <ListBox>
@@ -219,23 +245,11 @@ const LicenseMiddleBoxComponent: React.FC = () => {
             <DateCell>등록일</DateCell>
           </ListBoxTopSection>
           <ListBoxBottomSection>
-            {currentItems.map((item) => (
-              <ListItem key={item.id}>
-                <FieldCell>{item.field}</FieldCell>
-                <TitleCell style={{ textAlign: 'left' }}>{item.title}</TitleCell>
-                <CountCell style={{ textAlign: 'right' }}>{item.count}</CountCell>
-                <DateCell>{item.date}</DateCell>
-              </ListItem>
+            {problems.map((problem, index) => (
+              <ProblemItem key={index} problem={problem} />
             ))}
           </ListBoxBottomSection>
         </ListBox>
-        {currentItems.length >= itemsPerPage && (
-          <PageButtonsContainer>
-            <PageButtons>
-              {renderPageButtons()}
-            </PageButtons>
-          </PageButtonsContainer>
-        )}
       </MiddleFrameBox>
     </License_MiddleBox>
   );
