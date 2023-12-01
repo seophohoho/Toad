@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 node_modules/
 Config/
+=======
+/node_modules
+/Config
+>>>>>>> 9fcb9d3723118585aa22ae82396ef03fc8cacff7

@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
-import SignUp from "./signup";
+import SignIn from "./signin";
 
 // 사용자가 먼저 보여주는 페이지 - 홈 지정
 const Home: NextPage = function () {
-  return <SignUp />;
+  return <SignIn />;
 };
 
 export default Home;
