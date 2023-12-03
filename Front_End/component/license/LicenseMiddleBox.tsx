@@ -1,7 +1,11 @@
+// LicenseMiddleScreen.tsx
+
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { LicenseContainer } from "@/styles/LicenseStyle";
+import { useMemo } from 'react';
 
 const License_MiddleBox = styled.div`
   width: 100%;
@@ -93,6 +97,7 @@ const ListItem = styled.div`
   padding: 0 10px;
   text-align: center;
   border-bottom: 1px solid #8f8f8f;
+  cursor: pointer;
 `;
 
 const FieldCell = styled.div`
@@ -128,16 +133,26 @@ const DateCell = styled.div`
   margin-right: 5px;
 `;
 
-const ProblemItem = ({ majorField, title, submitCount, createdAt }) => (
-  <ListItem>
-    <FieldCell>{majorField}</FieldCell>
-    <TitleCell>{title}</TitleCell>
-    <CountCell>{submitCount}</CountCell>
-    <DateCell>{createdAt}</DateCell>
-  </ListItem>
-);
+const ProblemItem = ({ problemNumber, majorField, title, submitCount, createdAt }) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/licenseview/${problemNumber}`);
+  };
+
+  return (
+    <ListItem onClick={handleClick}>
+      <FieldCell>{majorField}</FieldCell>
+      <TitleCell>{title}</TitleCell>
+      <CountCell>{submitCount}</CountCell>
+      <DateCell>{createdAt}</DateCell>
+    </ListItem>
+  );
+};
 
 const LicenseMiddleBoxComponent: React.FC = () => {
+  const router = useRouter();
+  const { problem_number } = router.query;
   const [problems, setProblems] = useState([]);
 
   useEffect(() => {
@@ -145,7 +160,15 @@ const LicenseMiddleBoxComponent: React.FC = () => {
       .then(response => {
         setProblems(response.data);
       });
-    }, []);
+  }, []);
+
+  const filteredProblems = useMemo(() => {
+    // problem_number가 주어진 경우 해당 문제 번호에 대한 데이터만 필터링
+    if (problem_number) {
+      return problems.filter(problem => problem.problem_number === +problem_number);
+    }
+    return problems;
+  }, [problem_number, problems]);
 
   if (!problems) {
     return (
@@ -168,7 +191,7 @@ const LicenseMiddleBoxComponent: React.FC = () => {
               <DateCell>등록일</DateCell>
             </ListBoxTopSection>
             <ListBoxBottomSection>
-              <ProblemItem majorField="예시" title="예시 제목" submitCount={10} createdAt="2022.12.01" />
+              <ProblemItem problemNumber="1" majorField="예시" title="제목" submitCount={15} createdAt="2022.12.01" />
             </ListBoxBottomSection>
           </ListBox>
         </MiddleFrameBox>
@@ -196,9 +219,10 @@ const LicenseMiddleBoxComponent: React.FC = () => {
             <DateCell>등록일</DateCell>
           </ListBoxTopSection>
           <ListBoxBottomSection>
-            {problems.map(problem => (
+            {filteredProblems.map(problem => (
               <ProblemItem
                 key={problem.problem_number}
+                problemNumber={problem.problem_number}
                 majorField={problem.major_field_of}
                 title={problem.problem_title}
                 submitCount={problem.submit_cnt}
