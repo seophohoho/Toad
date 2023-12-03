@@ -97,7 +97,7 @@ import {  MyPageAll,
           const handleEvaluation = async (problem_number: number, submit_user: string, evaluation_user: string) => {
             try {
               // Axios를 사용하여 성공여부 업데이트(문제번호, 제출자이름, 검사자이름)
-              const response = await axios.post('http://localhost:4000/myinfo/myinfolist', {
+              const response = await axios.post('http://localhost:4000/myinfo/projectsuccess', {
                 problem_number:3,
                 submit_user:'seophohoho',
                 evaluation_user:'testman'
