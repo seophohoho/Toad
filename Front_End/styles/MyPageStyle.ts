@@ -631,8 +631,10 @@ const FailureButton = styled.button`
   color: white;
 `;
 
-
-
+//상단 버튼
+const InvisibleButton = styled.button`
+  display: none;
+`;
 
 
 export {
@@ -680,5 +682,6 @@ export {
     MPTableData,
     MPEvaluateBox,
     SuccessButton,
-    FailureButton
+    FailureButton,
+    InvisibleButton
 };
