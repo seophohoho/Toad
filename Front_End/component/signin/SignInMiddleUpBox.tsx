@@ -116,6 +116,7 @@ console.log({ "loginId":loginId,
         // 로그인 성공 처리
         console.log("로그인 성공", response.data);
         alert("로그인에 성공했습니다^^");
+        setIsLoggedIn(true);
       })
       .catch(error => {
         alert("로그인 실패");
@@ -124,28 +125,52 @@ console.log({ "loginId":loginId,
   };
   const [userId,setId] = useState("");
   const [pw,setPw] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <MiddleUpBox>
       <MiddleUpFrameBox>
-        <LoginBox>
-          {/* ID와 비밀번호 입력 필드 */}
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <InputField type="text" value={userId} onChange={(e)=>{setId(e.target.value)}} id="idInput" placeholder="ID" />
-            <InputField type="password" value={pw} onChange={(e)=>{setPw(e.target.value)}} id="passwordInput" placeholder="비밀번호" />
-            {/* 로그인 버튼 */}
-            <Button onClick={()=>handleLogin(userId,pw)}>로그인</Button>
-            {/* 간격 추가 */}
-            <div style={{ marginRight: "10px" }} />
-            {/* 회원가입 버튼 */}
-            <Button2 onClick={handleRegisterClick}>회원가입</Button2>
-            {/* 더 많은 간격 추가 */}
-            <div style={{ marginRight: "10px" }} />
-            {/* 아이디 찾기 및 비밀번호 재설정 버튼 */}
-            <Button3>아이디 찾기/비밀번호 재설정</Button3>
-            {/* 간격 추가 */}
-            <div style={{ marginRight: "10px" }} />
+        {isLoggedIn ? (
+          <div>
+            <p>환영합니다.</p>
           </div>
-        </LoginBox>
+        ) : (
+          <LoginBox>
+            {/* ID와 비밀번호 입력 필드 */}
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <InputField
+                type="text"
+                value={userId}
+                onChange={(e) => {
+                  setId(e.target.value);
+                }}
+                id="idInput"
+                placeholder="ID"
+              />
+              <InputField
+                type="password"
+                value={pw}
+                onChange={(e) => {
+                  setPw(e.target.value);
+                }}
+                id="passwordInput"
+                placeholder="비밀번호"
+              />
+              {/* 로그인 버튼 */}
+              <Button onClick={() => handleLogin(userId, pw)}>로그인</Button>
+              {/* 간격 추가 */}
+              <div style={{ marginRight: "10px" }} />
+              {/* 회원가입 버튼 */}
+              <Button2 onClick={handleRegisterClick}>회원가입</Button2>
+              {/* 더 많은 간격 추가 */}
+              <div style={{ marginRight: "10px" }} />
+              {/* 아이디 찾기 및 비밀번호 재설정 버튼 */}
+              <Button3>아이디 찾기/비밀번호 재설정</Button3>
+              {/* 간격 추가 */}
+              <div style={{ marginRight: "10px" }} />
+            </div>
+          </LoginBox>
+        )}
         <ImageBox>
           <BackgroundImage src="images/image.jpg" alt="배경 이미지" />
         </ImageBox>

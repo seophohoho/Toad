@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const signAPI = require("./API/signAPI");
 const licenseAPI = require("./API/licenseAPI");
+const myInfoAPI = require("./API/myInfoAPI");
 
 const app = express();
 const port = 4000;
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/sign", signAPI);
 app.use("/license",licenseAPI);
+app.use("/myinfo",myInfoAPI);
 
 //서버 실행
 app.listen(port, () => {
