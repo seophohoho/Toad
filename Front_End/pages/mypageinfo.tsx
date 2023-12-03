@@ -63,6 +63,7 @@ import {  MyPageAll,
         const [currentPassword, setCurrentPassword] = useState("");
         const [newPassword, setNewPassword] = useState("");
         const [confirmNewPassword, setConfirmNewPassword] = useState("");
+        const [evaluations, setEvaluations] = useState([]);
 
         //내정보 수정 버튼 눌렀을때
         const handleEditProfile = async () => {
@@ -79,6 +80,36 @@ import {  MyPageAll,
                 console.error('Error updating profile:', error);
             }
         };
+
+        useEffect(() => {
+            // Axios를 사용하여 평가해야 하는 항목 정보 가져오기
+            axios.get('http://localhost:4000/myinfo/myinfolist') 
+              .then(response => {
+                
+                setEvaluations(response.data);
+                console.log(evaluations);
+              })
+              .catch(error => {
+                console.error('Error fetching evaluations:', error);
+              });
+          }, []);
+        
+          const handleEvaluation = async (problem_number: number, submit_user: string, evaluation_user: string) => {
+            try {
+              // Axios를 사용하여 성공여부 업데이트(문제번호, 제출자이름, 검사자이름)
+              const response = await axios.put('http://localhost:4000/myinfo/myinfolist', {
+                problem_number:3,
+                submit_user:'seophohoho',
+                evaluation_user:'testman'
+              });
+        
+              console.log('Evaluation updated successfully:', response.data);
+            } catch (error) {
+              console.error('Error updating evaluation:', error);
+            }
+          };
+
+       
 
         
 
@@ -172,38 +203,35 @@ import {  MyPageAll,
                 </MyPageList>
                 <MPProfileBox>
                 <MPEvaluateBox>
-                        <MPInfoLabel>평가해야 하는 목록</MPInfoLabel>
-                        <MPInfoLine></MPInfoLine>
-                        <MPTable>
-                            <thead>
-                            <tr>
-                                <MPTableHeader>문제번호</MPTableHeader>
-                                <MPTableHeader>제출자</MPTableHeader>
-                                <MPTableHeader>문제이름</MPTableHeader>
-                                <MPTableHeader>비고</MPTableHeader>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <MPTableRow>
-                                <MPTableData>100</MPTableData>
-                                <MPTableData>testman</MPTableData>
-                                <MPTableData>[L1]로그인 페이지를 구현해라</MPTableData>
-                                <MPTableData>
-                                    <SuccessButton>성공</SuccessButton>
-                                    <FailureButton>실패</FailureButton>
-                                </MPTableData>
+                    <MPInfoLabel>평가해야 하는 목록</MPInfoLabel>
+                    <MPInfoLine></MPInfoLine>
+                    <MPTable>
+                        <thead>
+                        <tr>
+                            <MPTableHeader>문제번호</MPTableHeader>
+                            <MPTableHeader>제출자</MPTableHeader>
+                            <MPTableHeader>문제이름</MPTableHeader>
+                            <MPTableHeader>비고</MPTableHeader>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {evaluations.map((evaluation: any) => (
+                            <MPTableRow key={evaluation.problem_number}>
+                            <MPTableData>{evaluation.problem_number}</MPTableData>
+                            <MPTableData>{evaluation.submit_user}</MPTableData>
+                            <MPTableData>{evaluation.problem_title}</MPTableData>
+                            <MPTableData>
+                                <SuccessButton onClick={() => handleEvaluation(evaluation.problem_number, evaluation.submit_user, evaluation.evaluation_user)}>
+                                성공
+                                </SuccessButton>
+                                <FailureButton onClick={() => handleEvaluation(evaluation.problem_number, evaluation.submit_user, evaluation.evaluation_user)}>
+                                실패
+                                </FailureButton>
+                            </MPTableData>
                             </MPTableRow>
-                            <MPTableRow>
-                                <MPTableData>103</MPTableData>
-                                <MPTableData>seophohoho</MPTableData>
-                                <MPTableData>[L10]만두를 추천</MPTableData>
-                                <MPTableData>
-                                    <SuccessButton>성공</SuccessButton>
-                                    <FailureButton>실패</FailureButton>
-                                </MPTableData>
-                            </MPTableRow>
-                            </tbody>
-                        </MPTable>
+                        ))}
+                        </tbody>
+                    </MPTable>
                     </MPEvaluateBox>
                     
                     <MPInfoBox>
