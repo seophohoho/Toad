@@ -14,12 +14,16 @@ const Logo = styled.img`
   padding: 10px 0px; /* 수정된 패딩 값 */
   width: 120px;
   height: 50px; //auto;
+  margin-top: 15px;
 `;
 
 const LogoComponent: React.FC = () => {
+  const handleLogoClick = () => {
+    window.location.href = "/signin";
+  }
   return (
     <LogoWrapper>
-      <Logo src="path/to/your/logo.png" alt="Logo" />
+      <Logo src="images/Icon fa-solid-frog.svg" alt="Logo" onClick={handleLogoClick}/>
     </LogoWrapper>
   );
 };
