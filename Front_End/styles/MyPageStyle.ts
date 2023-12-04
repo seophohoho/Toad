@@ -18,12 +18,13 @@ const MyPageTop = styled.div`
     /* Layout Properties */
     top: 0px;
     left: -16px;
-    width: 1936px;
+    width: 1900px;
     height: 90px;
     /* UI Properties */
     background: #FFFFFF 0% 0% no-repeat padding-box;
     opacity: 1;
     margin-bottom: 25px;
+    
 `;
 
 //두꺼비 이미지
@@ -34,8 +35,6 @@ const MPImage = styled.img`
     width: 46px;
     height: 36px;
     /* UI Properties */
-    background: #578121 0% 0% no-repeat padding-box;
-    opacity: 1;
     margin-top: 27px;
     margin-bottom: 27px;
     margin-left: 300px;

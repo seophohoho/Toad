@@ -34,6 +34,29 @@ const LoginBox = styled.div`
   margin-top: 10px;
   order: 1;
 `;
+const LoginBox2 = styled.div`
+  width: 1200px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #a2cf68;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  order: 1;
+`;
+
+const LoginText = styled.div`
+  width: 150px;
+  height: 25px;
+  margin-top:5px;
+  margin-right: 5px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: flex-start;
+  
+`
 
 const InputField = styled.input`
   height: 25px;
@@ -72,6 +95,18 @@ const Button3 = styled.button`
   margin-top: 15px;
 `;
 
+const Button4 = styled.button`
+  padding: 0px 0px;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 15px;
+  margin-left: 10px;
+`;
+
 const ImageBox = styled.div`
   width: 1200px;
   height: 300px;
@@ -86,8 +121,10 @@ const BackgroundImage = styled.img`
   height: 100%;
   object-fit: cover;
 `;
+let userdata = "";
 
 const SignInMiddleUpBox: React.FC = () => {
+  
   const handleRegisterClick = () => {
     window.location.href = "/signup";
   };
@@ -117,6 +154,20 @@ console.log({ "loginId":loginId,
         console.log("로그인 성공", response.data);
         alert("로그인에 성공했습니다^^");
         setIsLoggedIn(true);
+        window.localStorage.setItem("userId", loginId)
+        const a = window.localStorage.getItem("userId")
+        axios.post("http://localhost:4000/sign/profilecard",
+        {
+          userId:a
+        })
+          .then(res =>{
+            userdata = res.data[0]
+            setUserName(userdata.user_name)
+            setUserLicense(userdata.user_license)
+          })
+          .catch(err =>{
+            console.log(err)
+          })
       })
       .catch(error => {
         alert("로그인 실패");
@@ -126,14 +177,18 @@ console.log({ "loginId":loginId,
   const [userId,setId] = useState("");
   const [pw,setPw] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName,setUserName] = useState("");
+  const [userLicense,setUserLicense] = useState("");
 
   return (
     <MiddleUpBox>
       <MiddleUpFrameBox>
         {isLoggedIn ? (
-          <div>
-            <p>환영합니다.</p>
-          </div>
+          <LoginBox2>
+            <LoginText>{userName}님 환영합니다!</LoginText>
+            <LoginText>현재 License Level : {userLicense}</LoginText>
+            <Button4>로그아웃</Button4>
+          </LoginBox2>
         ) : (
           <LoginBox>
             {/* ID와 비밀번호 입력 필드 */}
