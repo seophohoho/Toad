@@ -94,6 +94,7 @@ import {  MyPageAll,
               });
           }, []);
         
+          //성공버튼 눌렀을 때
           const handleEvaluation = async (problem_number: number, submit_user: string, evaluation_user: string) => {
             try {
               // Axios를 사용하여 성공여부 업데이트(문제번호, 제출자이름, 검사자이름)
@@ -108,7 +109,8 @@ import {  MyPageAll,
               console.error('Error updating evaluation:', error);
             }
           };
-
+          
+          //실패버튼 눌렀을 때
           const FailhandleEvaluation = async (user_Id: string) => {
             try {
               const Failresponse = await axios.post('fail', {
@@ -235,7 +237,7 @@ import {  MyPageAll,
                                 <SuccessButton onClick={() => handleEvaluation(evaluation.problem_number, evaluation.submit_user, evaluation.evaluation_user)}>
                                 성공
                                 </SuccessButton>
-                                <FailureButton onClick={() => handleEvaluation(evaluation.problem_number, evaluation.submit_user, evaluation.evaluation_user)}>
+                                <FailureButton onClick={() => FailhandleEvaluation(evaluation.user_Id)}>
                                 실패
                                 </FailureButton>
                             </MPTableData>
