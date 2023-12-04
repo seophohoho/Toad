@@ -76,9 +76,9 @@ const LicenseTopBoxComponent: React.FC = () => {
       <LicenseTopContent>
         <LogoComponent/>
         <ButtonComponent to="/license" label="라이선스 취득" />
-        <ButtonComponent to="/business-card" label="공개 명함" />
-        <ButtonComponent to="/resume" label="ONE 이력서" />
-        <ButtonComponent to="/mypage" label="마이페이지" />
+        <ButtonComponent to="/signin" label="공개 명함" />
+        <ButtonComponent to="/signin" label="ONE 이력서" />
+        <ButtonComponent to="/mypageinfo" label="마이페이지" />
       </LicenseTopContent>
     </License_TopBox>
   );

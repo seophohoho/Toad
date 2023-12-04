@@ -29,16 +29,28 @@ import {  MyPageAll,
                 console.error('회원 정보를 가져오는 중 에러 발생:', error);
             }
         };
-    
+        const handleLogoClick = () => {
+            window.location.href = "/signin";
+        }
+          
+        const handleLicenseClick = () => {
+            window.location.href = "/license";
+        }
+        const handleProfileClick = () => {
+            window.location.href = "/signin";
+        }
+        const handleMypageClick = () => {
+            window.location.href = "/mypageinfo";
+        }
         return (
             <>
                 <MyPageAll>
                     <MyPageTop>
-                        <MPImage></MPImage>
+                        <MPImage src="images/Icon fa-solid-frog.svg" alt="Logo" onClick={handleLogoClick}/>
                         <MPToadLabel>Toad</MPToadLabel>
-                        <LicenseLabel>라이선스 취득</LicenseLabel>
-                        <PublicProfileLabel>공개 명함</PublicProfileLabel>
-                        <MPMyPageLabel>마이페이지</MPMyPageLabel>
+                        <LicenseLabel onClick={handleLicenseClick}>라이선스 취득</LicenseLabel>
+                        <PublicProfileLabel onClick={handleProfileClick}>공개 명함</PublicProfileLabel>
+                        <MPMyPageLabel onClick={handleMypageClick}>마이페이지</MPMyPageLabel>
                     </MyPageTop>
                     <MyPageList>
                         <Link href="/mypageinfo">

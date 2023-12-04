@@ -97,7 +97,7 @@ import {  MyPageAll,
           const handleEvaluation = async (problem_number: number, submit_user: string, evaluation_user: string) => {
             try {
               // Axios를 사용하여 성공여부 업데이트(문제번호, 제출자이름, 검사자이름)
-              const response = await axios.post('http://localhost:4000/myinfo/myinfolist', {
+              const response = await axios.post('http://localhost:4000/myinfo/projectsuccess', {
                 problem_number:3,
                 submit_user:'seophohoho',
                 evaluation_user:'testman'
@@ -192,17 +192,28 @@ import {  MyPageAll,
 
         
           
-         
+          const handleLogoClick = () => {
+            window.location.href = "/signin";
+          }
 
+          const handleLicenseClick = () => {
+            window.location.href = "/license";
+          }
+          const handleProfileClick = () => {
+            window.location.href = "/signin";
+          }
+          const handleMypageClick = () => {
+            window.location.href = "/mypageinfo";
+          }
         return(
             <>
             <MyPageAll>
                 <MyPageTop>
-                    <MPImage></MPImage>
-                    <MPToadLabel>Tod</MPToadLabel>
-                    <LicenseLabel>라이선스 취득</LicenseLabel>
-                    <PublicProfileLabel>공개 명함</PublicProfileLabel>
-                    <MPMyPageLabel>마이페이지</MPMyPageLabel>
+                    <MPImage src="images/Icon fa-solid-frog.svg" alt="Logo" onClick={handleLogoClick}/>
+                    <MPToadLabel>Toad</MPToadLabel>
+                    <LicenseLabel onClick={handleLicenseClick}>라이선스 취득</LicenseLabel>
+                    <PublicProfileLabel onClick={handleProfileClick}>공개 명함</PublicProfileLabel>
+                    <MPMyPageLabel onClick={handleMypageClick}>마이페이지</MPMyPageLabel>
                 </MyPageTop>
                 <MyPageList>
                     <MPProfileButton>
