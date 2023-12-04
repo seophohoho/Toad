@@ -23,7 +23,7 @@ const LogoComponent: React.FC = () => {
   }
   return (
     <LogoWrapper>
-      <Logo src="images/Icon fa-solid-frog.svg" alt="Logo" onClick={handleLogoClick}/>
+      <Logo src="/images/Icon fa-solid-frog.svg" alt="Logo" onClick={handleLogoClick}/>
     </LogoWrapper>
   );
 };
