@@ -117,6 +117,18 @@ console.log({ "loginId":loginId,
         console.log("로그인 성공", response.data);
         alert("로그인에 성공했습니다^^");
         setIsLoggedIn(true);
+        window.localStorage.setItem("userId", loginId)
+        const a = window.localStorage.getItem("userId")
+        axios.post("http://localhost:4000/sign/profilecard",
+        {
+          userId:a
+        })
+          .then(res =>{
+            console.log(res)
+          })
+          .catch(err =>{
+            console.log(err)
+          })
       })
       .catch(error => {
         alert("로그인 실패");
