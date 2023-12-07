@@ -182,11 +182,15 @@ const SignUp: NextPage = () => {
     setAgree2(e.target.checked);
   };
 
+  const handleLogoClick = () => {
+    window.location.href = "/signin";
+  }
+
   return (
     <>
     <TodAll>
-      <TodImage/>
-        <TodLabel>TOD</TodLabel>
+      <TodImage src="images/Icon fa-solid-frog.svg" alt="Logo" onClick={handleLogoClick}/>
+        <TodLabel>TOAD</TodLabel>
         <SignUpTop>
         <TodSignUp>
           <SignUpLabel>회원가입</SignUpLabel>
