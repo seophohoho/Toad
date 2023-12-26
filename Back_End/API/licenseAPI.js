@@ -14,7 +14,7 @@ router.get("/licenselist", async (req,res) => {
       .json({ success: false, message: "API 호출 중 오류가 발생했습니다." });
   }
 });
-
+//hello!
 router.post("/licensesubmit", async (req,res) => {
   console.log('submit');
   console.log(req.body);
